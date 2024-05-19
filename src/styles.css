@@ -1,0 +1,25 @@
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+header nav {
+    margin-top: 15px;
+}
+
+.login-registration {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+.ln {
+    margin: 10px 10px;
+    text-decoration: none;
+    color: black;
+    transition: 500ms;
+}
+
+.ln:hover {
+    color: grey;
+}
