@@ -111,3 +111,25 @@ button:hover {
 .register-link a:hover {
     text-decoration: underline;
 }
+
+.message {
+    color: red;
+    font-size: 15px;
+    display: none;
+    position: relative;
+    bottom: 10px;
+}
+
+.incorrect {
+    border: 1px solid red;
+}
+
+form {
+    position: relative;
+}
+
+.checkbox {
+    position: absolute;
+    right: 0.5rem;
+    margin-top: 0.75rem;
+}

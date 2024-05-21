@@ -9,12 +9,14 @@
         <div class="login-container">
             <h2>Login</h2>
             <form id="loginForm">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required />
+                <label for="username">Email:</label>
+                <input type="text" id="email" name="email" required />
+                <div class="message emailMessage"></div>
 
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required />
-
+                <input class="checkbox" type="checkbox" />
+                <div class="message passwordMessage"></div>
                 <div class="checkbox-container">
                     <input type="checkbox" id="terms" name="terms" />
                     <label for="terms"
@@ -28,5 +30,7 @@
                 <a href="../src/register.html">Register</a>
             </div>
         </div>
+
+        <script src="../javascript/login.js"></script>
     </body>
 </html>
