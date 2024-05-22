@@ -120,6 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             password.style.border = '1px solid #ccc'
             form.submit()
+            window.location.href = '../src/index.html'
+            document.querySelector('')
         }
     })
 })

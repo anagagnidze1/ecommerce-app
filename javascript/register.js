@@ -1,14 +1,11 @@
-const min: number = 8
-const upper: RegExp = /[A-Z]/
-const lower: RegExp = /[a-z]/
-const num: RegExp = /[0-9]/
-const email: RegExp = /^[a-zA-Z0-9]+@[a-z]+\.com/
-const specialCharacters: RegExp = /[!@#$%^&*(),\.?":{}|<>]/
-const messages: HTMLDivElement[] = Array.from(
-    document.querySelectorAll('.message')
-)
-
-const countries: string[] = [
+var min = 8
+var upper = /[A-Z]/
+var lower = /[a-z]/
+var num = /[0-9]/
+var email = /^[a-zA-Z0-9]+@[a-z]+\.com/
+var specialCharacters = /[!@#$%^&*(),\.?":{}|<>]/
+var messages = Array.from(document.querySelectorAll('.message'))
+var countries = [
     'afghanistan',
     'albania',
     'algeria',
@@ -204,41 +201,17 @@ const countries: string[] = [
     'zambia',
     'zimbabwe',
 ]
-
-interface firstHalf {
-    first: boolean
-    last: boolean
-    mail: boolean
-    password: boolean
-    passwordMessage: string
-}
-
-interface secondHalf {
-    date: boolean
-    country: boolean
-    city: boolean
-    street: boolean
-    code: boolean
-}
-
-function checkOne(
-    first: string,
-    last: string,
-    mail: string,
-    password: string
-): firstHalf {
-    const answ: firstHalf = {
+function checkOne(first, last, mail, password) {
+    var answ = {
         first: true,
         last: true,
         mail: true,
         password: true,
         passwordMessage: '',
     }
-
     if (!email.test(mail)) {
         answ.mail = false
     }
-
     if (password.length < min) {
         answ.passwordMessage = 'Password must be at least 8 characters long'
         answ.password = false
@@ -258,94 +231,72 @@ function checkOne(
             'Password must not contain leading or trailing whitespace'
         answ.password = false
     }
-
     if (first.length <= 1 || specialCharacters.test(first) || num.test(first)) {
         answ.first = false
     }
-
     if (last.length <= 1 || specialCharacters.test(last) || num.test(last)) {
         answ.last = false
     }
-
     return answ
 }
-
-function checkTwo(
-    date: number,
-    country: string,
-    city: string,
-    street: string,
-    code: string
-): secondHalf {
-    const answ: secondHalf = {
+function checkTwo(date, country, city, street, code) {
+    var answ = {
         date: true,
         country: true,
         city: true,
         street: true,
         code: true,
     }
-
     if (date <= 13) {
         answ.date = false
     }
-
     if (!countries.includes(country.toLowerCase())) {
         answ.country = false
     }
-
     if (city.length <= 1 || specialCharacters.test(city) || num.test(city)) {
         answ.city = false
     }
-
     if (street.length < 2) {
         answ.street = false
     }
-
     if (!/[1-5]+/.test(code) || !/^[1-9A-Z]+$/.test(code)) {
         answ.code = false
     }
-
     return answ
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form') as HTMLFormElement
-    form.addEventListener('submit', (event) => {
+document.addEventListener('DOMContentLoaded', function () {
+    var form = document.querySelector('form')
+    form.addEventListener('submit', function (event) {
         event.preventDefault()
-        const first = document.querySelector('#firstname') as HTMLInputElement
-        const last = document.querySelector('#lastname') as HTMLInputElement
-        const email = document.querySelector('#email') as HTMLInputElement
-        const password = document.querySelector('#password') as HTMLInputElement
-        const date = document.querySelector('#birthdate') as HTMLInputElement
-        const country = document.querySelector('#country') as HTMLInputElement
-        const city = document.querySelector('#city') as HTMLInputElement
-        const street = document.querySelector('#street') as HTMLInputElement
-        const code = document.querySelector('#code') as HTMLInputElement
-
-        const today = new Date()
-        let age = today.getFullYear() - new Date(date.value).getFullYear()
-        const monthDiff = today.getMonth() - new Date(date.value).getMonth()
-        const dayDiff = today.getDate() - new Date(date.value).getDate()
-
+        var first = document.querySelector('#firstname')
+        var last = document.querySelector('#lastname')
+        var email = document.querySelector('#email')
+        var password = document.querySelector('#password')
+        var date = document.querySelector('#birthdate')
+        var country = document.querySelector('#country')
+        var city = document.querySelector('#city')
+        var street = document.querySelector('#street')
+        var code = document.querySelector('#code')
+        var today = new Date()
+        var age = today.getFullYear() - new Date(date.value).getFullYear()
+        var monthDiff = today.getMonth() - new Date(date.value).getMonth()
+        var dayDiff = today.getDate() - new Date(date.value).getDate()
         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
             age--
         }
-
-        const firstHalf = checkOne(
+        var firstHalf = checkOne(
             first.value,
             last.value,
             email.value,
             password.value
         )
-
-        const secondHalf = checkTwo(
+        var secondHalf = checkTwo(
             age,
             country.value,
             city.value,
             street.value,
             code.value
         )
-
         if (!firstHalf.first) {
             messages[0].classList.remove('remove')
             first.style.border = '1px solid red'
@@ -353,7 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
             first.style.border = '1px solid #ccc'
             messages[0].classList.add('remove')
         }
-
         if (!firstHalf.last) {
             messages[1].classList.remove('remove')
             last.style.border = '1px solid red'
@@ -361,7 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
             last.style.border = '1px solid #ccc'
             messages[1].classList.add('remove')
         }
-
         if (!firstHalf.mail) {
             messages[2].classList.remove('remove')
             email.style.border = '1px solid red'
@@ -369,16 +318,14 @@ document.addEventListener('DOMContentLoaded', () => {
             email.style.border = '1px solid #ccc'
             messages[2].classList.add('remove')
         }
-
         if (!firstHalf.password) {
-            messages[3].innerHTML = `${firstHalf.passwordMessage}`
+            messages[3].innerHTML = ''.concat(firstHalf.passwordMessage)
             messages[3].classList.remove('remove')
             password.style.border = '1px solid red'
         } else {
             password.style.border = '1px solid #ccc'
             messages[3].classList.add('remove')
         }
-
         if (!secondHalf.date) {
             messages[4].classList.remove('remove')
             date.style.border = '1px solid red'
@@ -386,7 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
             date.style.border = '1px solid #ccc'
             messages[4].classList.add('remove')
         }
-
         if (!secondHalf.country) {
             messages[5].classList.remove('remove')
             country.style.border = '1px solid red'
@@ -394,7 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
             country.style.border = '1px solid #ccc'
             messages[5].classList.add('remove')
         }
-
         if (!secondHalf.city) {
             messages[6].classList.remove('remove')
             city.style.border = '1px solid red'
@@ -402,7 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
             city.style.border = '1px solid #ccc'
             messages[6].classList.add('remove')
         }
-
         if (!secondHalf.street) {
             messages[7].classList.remove('remove')
             street.style.border = '1px solid red'
@@ -410,7 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
             street.style.border = '1px solid #ccc'
             messages[7].classList.add('remove')
         }
-
         if (!secondHalf.code) {
             messages[8].classList.remove('remove')
             code.style.border = '1px solid red'
@@ -418,7 +361,6 @@ document.addEventListener('DOMContentLoaded', () => {
             code.style.border = '1px solid #ccc'
             messages[8].classList.add('remove')
         }
-
         if (Array.from(document.querySelectorAll('.remove')).length === 9) {
             form.submit()
             window.location.href = '../src/index.html'

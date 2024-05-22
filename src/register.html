@@ -18,17 +18,58 @@
                 alt="Logo"
             />
             <h2>Register</h2>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required />
+            <label for="firstname">First name</label>
+            <input type="text" id="firstname" name="firstname" required />
+            <div class="message remove">
+                First name must contain at least one character and no special
+                characters or numbers
+            </div>
+
+            <label for="lastname">Last name</label>
+            <input type="text" id="lastname" name="lastname" required />
+            <div class="message remove">
+                Last name must contain at least one character and no special
+                characters or numbers
+            </div>
 
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required />
+            <div class="message remove">
+                'Email address must be properly formatted (e.g.,
+                user@example.com).'
+            </div>
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required />
+            <div class="message remove"></div>
 
             <label for="birthdate">Birth Date</label>
             <input type="date" id="birthdate" name="birthdate" required />
+            <div class="message remove">User should be older than 13</div>
+
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" required />
+            <div class="message remove">Must be a valid country</div>
+
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" required />
+            <div class="message remove">
+                City must contain at least one character and no special
+                characters or numbers
+            </div>
+
+            <label for="street">Street</label>
+            <input type="text" id="street" name="street" required />
+            <div class="message remove">
+                Street must contain at least one character
+            </div>
+
+            <label for="code">Postal Code</label>
+            <input type="text" id="code" name="code" required />
+            <div class="message remove">
+                Postal code must follow the format for the country (e.g., 12345
+                or A1B 2C3 for the U.S. and Canada, respectively)
+            </div>
 
             <div class="checkbox-container">
                 <input type="checkbox" id="terms" name="terms" />
@@ -46,5 +87,7 @@
                 </p>
             </div>
         </form>
+
+        <script src="../javascript/register.js"></script>
     </body>
 </html>
