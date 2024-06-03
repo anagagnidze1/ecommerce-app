@@ -18,8 +18,40 @@ header nav {
     text-decoration: none;
     color: black;
     transition: 500ms;
+    cursor: pointer;
+    font-family: Inter;
 }
 
 .ln:hover {
-    color: grey;
+    color: #4bbf28;
+}
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+.mainpicture {
+    display: inline-block;
+}
+.maintext{
+    display: inline-block;
+    margin-left: 60px;
+}
+.button{
+    background-color: #4bbf28;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 30%;
+    font-size: 18px;
+    color: white;
+    padding: 10px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.button:hover{
+    background-color: #6ce349;
+    transform: scale(1.05);
 }
