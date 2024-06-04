@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../styles/login.css" />
+    </head>
+    <body class="log-in">
+        <div class="login-container">
+            <img
+                src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/07/logo-leaf-new.png"
+                alt="Logo"
+            />
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="username">Email:</label>
+                <input type="text" id="email" name="email" required />
+                <div class="message emailMessage"></div>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+                <input class="checkbox" type="checkbox" />
+                <div class="message passwordMessage"></div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="terms" name="terms" />
+                    <label for="terms"
+                        >I agree to the <a href="#">Terms of Service</a></label
+                    >
+                </div>
+
+                <button type="submit">Login</button>
+            </form>
+            <div class="register-link">
+                Don't have an account yet?
+                <a href="../src/register.html">Register</a>
+            </div>
+        </div>
+
+        <script src="../javascript/login.js"></script>
+    </body>
+</html>
