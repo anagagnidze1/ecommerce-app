@@ -1,38 +1,101 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="../styles/styles.css" />
-        <title>eCommerce</title>
-    </head>
-    <body>
-        <header>
-            <img src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/06/organic-store-logo5.svg" alt="logo">
-            <nav>
-                <ul class="login-registration">
-                    <li><a href="login.html" class="ln login">Login</a></li>
-                    <li><a href="register.html" class="ln">Register</a></li>
-                </ul>
-            </nav>
-        </header>
-        <main class="main">
-            <div class="mainpicture">
-                <img src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2021/03/organic-products-hero.png">
-            </div>
-            <div class="maintext">
-                <img src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/07/logo-leaf-new.png">
-                <p style="font-family: inter;">Best Quality Products</p>
-                <h1 style="font-family: inter; font-size: 50px;">Join The Organic Movement!</h1>
-                <p style="font-family: inter;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                <p style="font-family: inter;">Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-                <button class="button">shop now</button>
-            </div>
-        </main>
-        <h1>
-          
-        </h1>
 
-        <script src="../public/bundle.js"></script>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>eCommerce</title>
+</head>
+
+<body>
+    <header>
+        <a href="/index.html"><img width="150" height="auto" margin-right="20px"
+            src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/06/organic-store-logo5.svg"
+            class="custom-logo" alt="Organic Store" decoding="async"></a>
+        <nav>
+            <ul class="login-registration" style="gap: 20px;">
+                <li><a href="login.html" class="ln login">Login</a></li>
+                <li><a href="register.html" class="ln">Register</a></li>
+                <li><a href="#" class="chart"><i style="color: #6a9739;" class="fas fa-shopping-basket"></i></a>
+                <li><a href="profile.html" class="profile"><i style="color: #111111;" class="fas fa-user profile-icon"></i></a></li>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main">
+        <div class="mainpicture">
+            <img
+                src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2021/03/organic-products-hero.png">
+        </div>
+        <div class="maintext" style="margin-right:200px">
+            <img src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/07/logo-leaf-new.png">
+            <p style="font-family: inter;">Best Quality Products</p>
+            <h1 style="font-family: inter; font-size: 50px;">Join The Organic <br>Movement!</h1>
+            <p style="font-family: inter;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+            <p style="font-family: inter;">Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+            <button class="button" style="z-index: 3; position: absolute;"> <i class="fa fa-shopping-cart chart"
+                    style="font-size:20px"></i>shop now </button>
+
+        </div>
+        <img src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/06/leaves-free-img.png"
+            alt="" style="width: 600px;
+            height: auto; position: absolute; z-index: 1; opacity: 30%; margin-top: 400px; margin-left: 70em;">
+    </main>
+    <div class="extra-info">
+        <div class="box1">
+            <i class="fas fa-shipping-fast icon"></i> FREE SHIPPING
+        </div>
+
+        <div class="box2">
+            <i class="fas fa-certificate icon"></i> CERTIFIED ORGANIC
+        </div>
+
+        <div class="box3">
+            <i class="fa-solid fa-dollar-sign icon"></i> HUGE SAVINGS
+        </div>
+
+        <div class="box4">
+            <i class="fas fa-recycle icon"></i> EASY RETURNS
+        </div>
+    </div>
+
+
+
+    <div class="best-sellers">
+        <div class="best-header">
+
+            <h1>
+                Best Selling Products
+            </h1><img
+                src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/07/logo-leaf-new.png"
+                alt="best-seller-img">
+
+        </div>
+        <div class="best-items">
+
+        </div>
+    </div>
+
+    <footer>
+        <footer class="footer">
+            <div class="logo">
+                <a href="/index.html"><img
+                        src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/07/organic-store-white-logo.png"
+                        alt="app-logo"></a>
+            </div>
+            <div class="social-links">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </footer>
+
+        <script src="../javascript/index.js"></script>
+
+</body>
+
 </html>
