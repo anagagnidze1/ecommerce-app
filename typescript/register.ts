@@ -307,121 +307,129 @@ function checkTwo(
 
     return answ
 }
+export function initializeRegistrationForm() {
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form') as HTMLFormElement
+        form.addEventListener('submit', (event) => {
+            event.preventDefault()
+            const first = document.querySelector('#firstname') as HTMLInputElement
+            const last = document.querySelector('#lastname') as HTMLInputElement
+            const email = document.querySelector('#email') as HTMLInputElement
+            const password = document.querySelector('#password') as HTMLInputElement
+            const date = document.querySelector('#birthdate') as HTMLInputElement
+            const country = document.querySelector('#country') as HTMLInputElement
+            const city = document.querySelector('#city') as HTMLInputElement
+            const street = document.querySelector('#street') as HTMLInputElement
+            const code = document.querySelector('#code') as HTMLInputElement
 
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form') as HTMLFormElement
-    form.addEventListener('submit', (event) => {
-        event.preventDefault()
-        const first = document.querySelector('#firstname') as HTMLInputElement
-        const last = document.querySelector('#lastname') as HTMLInputElement
-        const email = document.querySelector('#email') as HTMLInputElement
-        const password = document.querySelector('#password') as HTMLInputElement
-        const date = document.querySelector('#birthdate') as HTMLInputElement
-        const country = document.querySelector('#country') as HTMLInputElement
-        const city = document.querySelector('#city') as HTMLInputElement
-        const street = document.querySelector('#street') as HTMLInputElement
-        const code = document.querySelector('#code') as HTMLInputElement
+            console.log(first);
+            console.log(last);
+            console.log(email);
+            console.log(password);
 
-        const today = new Date()
-        let age = today.getFullYear() - new Date(date.value).getFullYear()
-        const monthDiff = today.getMonth() - new Date(date.value).getMonth()
-        const dayDiff = today.getDate() - new Date(date.value).getDate()
 
-        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-            age--
-        }
+            const today = new Date()
+            let age = today.getFullYear() - new Date(date.value).getFullYear()
+            const monthDiff = today.getMonth() - new Date(date.value).getMonth()
+            const dayDiff = today.getDate() - new Date(date.value).getDate()
 
-        const firstHalf = checkOne(
-            first.value,
-            last.value,
-            email.value,
-            password.value
-        )
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                age--
+            }
 
-        const secondHalf = checkTwo(
-            age,
-            country.value,
-            city.value,
-            street.value,
-            code.value
-        )
+            const firstHalf = checkOne(
+                first.value,
+                last.value,
+                email.value,
+                password.value
+            )
 
-        if (!firstHalf.first) {
-            messages[0].classList.remove('remove')
-            first.style.border = '1px solid red'
-        } else {
-            first.style.border = '1px solid #ccc'
-            messages[0].classList.add('remove')
-        }
+            const secondHalf = checkTwo(
+                age,
+                country.value,
+                city.value,
+                street.value,
+                code.value
+            )
 
-        if (!firstHalf.last) {
-            messages[1].classList.remove('remove')
-            last.style.border = '1px solid red'
-        } else {
-            last.style.border = '1px solid #ccc'
-            messages[1].classList.add('remove')
-        }
+            if (!firstHalf.first) {
+                messages[0].classList.remove('remove')
+                first.style.border = '1px solid red'
+            } else {
+                first.style.border = '1px solid #ccc'
+                messages[0].classList.add('remove')
+            }
 
-        if (!firstHalf.mail) {
-            messages[2].classList.remove('remove')
-            email.style.border = '1px solid red'
-        } else {
-            email.style.border = '1px solid #ccc'
-            messages[2].classList.add('remove')
-        }
+            if (!firstHalf.last) {
+                messages[1].classList.remove('remove')
+                last.style.border = '1px solid red'
+            } else {
+                last.style.border = '1px solid #ccc'
+                messages[1].classList.add('remove')
+            }
 
-        if (!firstHalf.password) {
-            messages[3].innerHTML = `${firstHalf.passwordMessage}`
-            messages[3].classList.remove('remove')
-            password.style.border = '1px solid red'
-        } else {
-            password.style.border = '1px solid #ccc'
-            messages[3].classList.add('remove')
-        }
+            if (!firstHalf.mail) {
+                messages[2].classList.remove('remove')
+                email.style.border = '1px solid red'
+            } else {
+                email.style.border = '1px solid #ccc'
+                messages[2].classList.add('remove')
+            }
 
-        if (!secondHalf.date) {
-            messages[4].classList.remove('remove')
-            date.style.border = '1px solid red'
-        } else {
-            date.style.border = '1px solid #ccc'
-            messages[4].classList.add('remove')
-        }
+            if (!firstHalf.password) {
+                messages[3].innerHTML = `${firstHalf.passwordMessage}`
+                messages[3].classList.remove('remove')
+                password.style.border = '1px solid red'
+            } else {
+                password.style.border = '1px solid #ccc'
+                messages[3].classList.add('remove')
+            }
 
-        if (!secondHalf.country) {
-            messages[5].classList.remove('remove')
-            country.style.border = '1px solid red'
-        } else {
-            country.style.border = '1px solid #ccc'
-            messages[5].classList.add('remove')
-        }
+            if (!secondHalf.date) {
+                messages[4].classList.remove('remove')
+                date.style.border = '1px solid red'
+            } else {
+                date.style.border = '1px solid #ccc'
+                messages[4].classList.add('remove')
+            }
 
-        if (!secondHalf.city) {
-            messages[6].classList.remove('remove')
-            city.style.border = '1px solid red'
-        } else {
-            city.style.border = '1px solid #ccc'
-            messages[6].classList.add('remove')
-        }
+            if (!secondHalf.country) {
+                messages[5].classList.remove('remove')
+                country.style.border = '1px solid red'
+            } else {
+                country.style.border = '1px solid #ccc'
+                messages[5].classList.add('remove')
+            }
 
-        if (!secondHalf.street) {
-            messages[7].classList.remove('remove')
-            street.style.border = '1px solid red'
-        } else {
-            street.style.border = '1px solid #ccc'
-            messages[7].classList.add('remove')
-        }
+            if (!secondHalf.city) {
+                messages[6].classList.remove('remove')
+                city.style.border = '1px solid red'
+            } else {
+                city.style.border = '1px solid #ccc'
+                messages[6].classList.add('remove')
+            }
 
-        if (!secondHalf.code) {
-            messages[8].classList.remove('remove')
-            code.style.border = '1px solid red'
-        } else {
-            code.style.border = '1px solid #ccc'
-            messages[8].classList.add('remove')
-        }
+            if (!secondHalf.street) {
+                messages[7].classList.remove('remove')
+                street.style.border = '1px solid red'
+            } else {
+                street.style.border = '1px solid #ccc'
+                messages[7].classList.add('remove')
+            }
 
-        if (Array.from(document.querySelectorAll('.remove')).length === 9) {
-            form.submit()
-            window.location.href = '../src/index.html'
-        }
+            if (!secondHalf.code) {
+                messages[8].classList.remove('remove')
+                code.style.border = '1px solid red'
+            } else {
+                code.style.border = '1px solid #ccc'
+                messages[8].classList.add('remove')
+            }
+
+            if (Array.from(document.querySelectorAll('.remove')).length === 9) {
+                form.submit()
+                window.location.href = '../src/index.html'
+            }
+
+        })
     })
-})
+}

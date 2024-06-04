@@ -269,14 +269,27 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', function (event) {
         event.preventDefault()
         var first = document.querySelector('#firstname')
+        var firstName = document.querySelector('#firstname').value
         var last = document.querySelector('#lastname')
+        var lastName = document.querySelector('#lastname').value
         var email = document.querySelector('#email')
+        var emailValue = document.querySelector('#email').value
         var password = document.querySelector('#password')
+        var passwordValue = document.querySelector('#password').value
         var date = document.querySelector('#birthdate')
         var country = document.querySelector('#country')
         var city = document.querySelector('#city')
         var street = document.querySelector('#street')
         var code = document.querySelector('#code')
+
+
+        console.log(firstName);
+        console.log(lastName);
+        console.log(emailValue);
+        console.log(passwordValue);
+        console.log("Country value:", country);
+
+
         var today = new Date()
         var age = today.getFullYear() - new Date(date.value).getFullYear()
         var monthDiff = today.getMonth() - new Date(date.value).getMonth()
@@ -285,10 +298,10 @@ document.addEventListener('DOMContentLoaded', function () {
             age--
         }
         var firstHalf = checkOne(
-            first.value,
-            last.value,
-            email.value,
-            password.value
+            first,
+            last,
+            email,
+            password
         )
         var secondHalf = checkTwo(
             age,
@@ -361,9 +374,38 @@ document.addEventListener('DOMContentLoaded', function () {
             code.style.border = '1px solid #ccc'
             messages[8].classList.add('remove')
         }
-        if (Array.from(document.querySelectorAll('.remove')).length === 9) {
-            form.submit()
-            window.location.href = '../src/index.html'
-        }
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Bearer FlB2-eSKWS57OCjq4OqYg27ZqXQ9T3Yu");
+
+        console.log("Creating JSON...");
+
+        const raw = JSON.stringify({
+        "email": emailValue,
+        "firstName": firstName,
+        "lastName": lastName,
+        "password": passwordValue
+        });
+
+        const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        };
+
+        fetch("https://api.europe-west1.gcp.commercetools.com/rsproject/customers", requestOptions)
+        .then(async (response) => {
+            if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+            }
+
+            console.log("Customer created successfully!");
+            window.location.href = "index.html";
+        })
+        .catch((error) => {
+            console.error("Error creating customer:", error);
+        });
+
     })
 })
