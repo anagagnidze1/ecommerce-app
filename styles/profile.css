@@ -202,15 +202,18 @@
         }
 
         .footer {
-            background-color: #111111;
-            color: #fffff2;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            bottom: 0;
+        background-color: #111111;
+        color: #fffff2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
 
-        }
+    }
 
         .footer .logo {
             display: flex;
