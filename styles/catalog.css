@@ -56,4 +56,9 @@ body {
   .product-card:hover {
     transform: scale(1.05);
   }
+  .discounted-price {
+    color: #8A2020;
+    font-weight: bold;
+    font-family: Inter;
+}
   
