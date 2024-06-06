@@ -114,7 +114,7 @@ function renderProductCards(products) {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         productCard.innerHTML = `
-            <img src="${imageUrl}" alt="${name}" />
+        <img src="${imageUrl}" alt="${name}" onclick="openModal('${imageUrl}')"/>
             <h3>${name}</h3>
             <div class="description-container">${description}</div>
             <p class="price">Price: $${price}</p>
@@ -125,3 +125,21 @@ function renderProductCards(products) {
 }
 
 fetchProductsAndDiscounts();
+
+function openModal(imageSrc) {
+    const modal = document.getElementById('myModal');
+    const modalImg = document.getElementById('modalImg');
+    modal.style.display = 'block';
+    modalImg.src = imageSrc;
+  }
+window.onclick = function(event) {
+    const modal = document.getElementById('myModal');
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+}
+const closeBtn = document.getElementsByClassName('close')[0];
+closeBtn.onclick = function() {
+  const modal = document.getElementById('myModal');
+  modal.style.display = 'none';
+}
