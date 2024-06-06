@@ -2,7 +2,7 @@ var min = 8
 var upper = /[A-Z]/
 var lower = /[a-z]/
 var num = /[0-9]/
-var email = /^[a-zA-Z0-9]+@[a-z]+\.com/
+var email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 var specialCharacters = /[!@#$%^&*(),\.?":{}|<>]/
 var messages = Array.from(document.querySelectorAll('.message'))
 var countries = [
@@ -201,6 +201,30 @@ var countries = [
     'zambia',
     'zimbabwe',
 ]
+
+async function fetchAccessToken() {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", "Basic ZWNBMlpGaF9JUHp2ekYweDVzSDNEczV6Omp4bkxJWlFVRHRaVEp6UG96V1EyYVdQTkE1Ync0a3Uy");
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        redirect: "follow"
+    };
+
+    try {
+        const response = await fetch("https://auth.europe-west1.gcp.commercetools.com/oauth/token?grant_type=client_credentials", requestOptions);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch access token: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log("Token response received " + result.access_token);
+        return result.access_token;
+    } catch (error) {
+        console.error("Error fetching access token:", error);
+        throw error;
+    }
+}
 function checkOne(first, last, mail, password) {
     var answ = {
         first: true,
@@ -265,23 +289,22 @@ function checkTwo(date, country, city, street, code) {
     return answ
 }
 document.addEventListener('DOMContentLoaded', function () {
-    var form = document.querySelector('form')
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
-        var first = document.querySelector('#firstname')
-        var firstName = document.querySelector('#firstname').value
-        var last = document.querySelector('#lastname')
-        var lastName = document.querySelector('#lastname').value
-        var email = document.querySelector('#email')
-        var emailValue = document.querySelector('#email').value
-        var password = document.querySelector('#password')
-        var passwordValue = document.querySelector('#password').value
-        var date = document.querySelector('#birthdate')
-        var country = document.querySelector('#country')
-        var city = document.querySelector('#city')
-        var street = document.querySelector('#street')
-        var code = document.querySelector('#code')
-
+    var form = document.querySelector('form');
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        var first = document.querySelector('#firstname');
+        var firstName = document.querySelector('#firstname').value;
+        var last = document.querySelector('#lastname');
+        var lastName = document.querySelector('#lastname').value;
+        var email = document.querySelector('#email');
+        var emailValue = document.querySelector('#email').value;
+        var password = document.querySelector('#password');
+        var passwordValue = document.querySelector('#password').value;
+        var date = document.querySelector('#birthdate');
+        var country = document.querySelector('#country');
+        var city = document.querySelector('#city');
+        var street = document.querySelector('#street');
+        var code = document.querySelector('#code');
 
         console.log(firstName);
         console.log(lastName);
@@ -289,123 +312,119 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(passwordValue);
         console.log("Country value:", country);
 
-
-        var today = new Date()
-        var age = today.getFullYear() - new Date(date.value).getFullYear()
-        var monthDiff = today.getMonth() - new Date(date.value).getMonth()
-        var dayDiff = today.getDate() - new Date(date.value).getDate()
+        var today = new Date();
+        var age = today.getFullYear() - new Date(date.value).getFullYear();
+        var monthDiff = today.getMonth() - new Date(date.value).getMonth();
+        var dayDiff = today.getDate() - new Date(date.value).getDate();
         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-            age--
+            age--;
         }
-        var firstHalf = checkOne(
-            first,
-            last,
-            email,
-            password
-        )
-        var secondHalf = checkTwo(
-            age,
-            country.value,
-            city.value,
-            street.value,
-            code.value
-        )
+
+        // Updated the line to pass values instead of elements
+        var firstHalf = checkOne(firstName, lastName, emailValue, passwordValue);
+        var secondHalf = checkTwo(age, country.value, city.value, street.value, code.value);
+
         if (!firstHalf.first) {
-            messages[0].classList.remove('remove')
-            first.style.border = '1px solid red'
+            messages[0].classList.remove('remove');
+            first.style.border = '1px solid red';
         } else {
-            first.style.border = '1px solid #ccc'
-            messages[0].classList.add('remove')
+            first.style.border = '1px solid #ccc';
+            messages[0].classList.add('remove');
         }
         if (!firstHalf.last) {
-            messages[1].classList.remove('remove')
-            last.style.border = '1px solid red'
+            messages[1].classList.remove('remove');
+            last.style.border = '1px solid red';
         } else {
-            last.style.border = '1px solid #ccc'
-            messages[1].classList.add('remove')
+            last.style.border = '1px solid #ccc';
+            messages[1].classList.add('remove');
         }
         if (!firstHalf.mail) {
-            messages[2].classList.remove('remove')
-            email.style.border = '1px solid red'
+            messages[2].classList.remove('remove');
+            email.style.border = '1px solid red';
         } else {
-            email.style.border = '1px solid #ccc'
-            messages[2].classList.add('remove')
+            email.style.border = '1px solid #ccc';
+            messages[2].classList.add('remove');
         }
         if (!firstHalf.password) {
-            messages[3].innerHTML = ''.concat(firstHalf.passwordMessage)
-            messages[3].classList.remove('remove')
-            password.style.border = '1px solid red'
+            messages[3].innerHTML = ''.concat(firstHalf.passwordMessage);
+            messages[3].classList.remove('remove');
+            password.style.border = '1px solid red';
         } else {
-            password.style.border = '1px solid #ccc'
-            messages[3].classList.add('remove')
+            password.style.border = '1px solid #ccc';
+            messages[3].classList.add('remove');
         }
         if (!secondHalf.date) {
-            messages[4].classList.remove('remove')
-            date.style.border = '1px solid red'
+            messages[4].classList.remove('remove');
+            date.style.border = '1px solid red';
         } else {
-            date.style.border = '1px solid #ccc'
-            messages[4].classList.add('remove')
+            date.style.border = '1px solid #ccc';
+            messages[4].classList.add('remove');
         }
         if (!secondHalf.country) {
-            messages[5].classList.remove('remove')
-            country.style.border = '1px solid red'
+            messages[5].classList.remove('remove');
+            country.style.border = '1px solid red';
         } else {
-            country.style.border = '1px solid #ccc'
-            messages[5].classList.add('remove')
+            country.style.border = '1px solid #ccc';
+            messages[5].classList.add('remove');
         }
         if (!secondHalf.city) {
-            messages[6].classList.remove('remove')
-            city.style.border = '1px solid red'
+            messages[6].classList.remove('remove');
+            city.style.border = '1px solid red';
         } else {
-            city.style.border = '1px solid #ccc'
-            messages[6].classList.add('remove')
+            city.style.border = '1px solid #ccc';
+            messages[6].classList.add('remove');
         }
         if (!secondHalf.street) {
-            messages[7].classList.remove('remove')
-            street.style.border = '1px solid red'
+            messages[7].classList.remove('remove');
+            street.style.border = '1px solid red';
         } else {
-            street.style.border = '1px solid #ccc'
-            messages[7].classList.add('remove')
+            street.style.border = '1px solid #ccc';
+            messages[7].classList.add('remove');
         }
         if (!secondHalf.code) {
-            messages[8].classList.remove('remove')
-            code.style.border = '1px solid red'
+            messages[8].classList.remove('remove');
+            code.style.border = '1px solid red';
         } else {
-            code.style.border = '1px solid #ccc'
-            messages[8].classList.add('remove')
+            code.style.border = '1px solid #ccc';
+            messages[8].classList.add('remove');
         }
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Bearer FlB2-eSKWS57OCjq4OqYg27ZqXQ9T3Yu");
+        if (!firstHalf.first || !firstHalf.last || !firstHalf.mail || !firstHalf.password || !secondHalf.date || !secondHalf.country || !secondHalf.city || !secondHalf.street || !secondHalf.code) {
+            return;
+        }
 
-        console.log("Creating JSON...");
+        try {
+            const accessToken = await fetchAccessToken();
+            const newToken = "Bearer " + accessToken;
 
-        const raw = JSON.stringify({
-        "email": emailValue,
-        "firstName": firstName,
-        "lastName": lastName,
-        "password": passwordValue
-        });
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", newToken);
 
-        const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        };
+            console.log("Creating JSON...");
 
-        fetch("https://api.europe-west1.gcp.commercetools.com/rsproject/customers", requestOptions)
-        .then(async (response) => {
+            const raw = JSON.stringify({
+                "email": emailValue,
+                "firstName": firstName,
+                "lastName": lastName,
+                "password": passwordValue
+            });
+
+            const requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+            };
+
+            const response = await fetch("https://api.europe-west1.gcp.commercetools.com/rsproject/customers", requestOptions);
             if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+                const errorText = await response.text();
+                throw new Error(`Request failed with status ${response.status}: ${errorText}`);
             }
 
             console.log("Customer created successfully!");
             window.location.href = "index.html";
-        })
-        .catch((error) => {
+        } catch (error) {
             console.error("Error creating customer:", error);
-        });
-
-    })
-})
+        }
+    });
+});
