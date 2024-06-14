@@ -1,18 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Cards</title>
-  <link rel="stylesheet" href="../styles/catalog.css">
-</head>
-<header>
-    <a href="/index.html"><img width="150" height="auto" margin-right="20px"
-        src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/06/organic-store-logo5.svg"
-        class="custom-logo" alt="Organic Store" decoding="async"></a>
-</header>
-<body>
-  <div id="product-container" class="product-container"></div>
-  <script src="../javascript/catalog.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Product Cards</title>
+        <link rel="stylesheet" href="../styles/catalog.css" />
+    </head>
+    <header>
+        <a href="index.html"
+            ><img
+                width="150"
+                height="auto"
+                margin-right="20px"
+                src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/06/organic-store-logo5.svg"
+                class="custom-logo"
+                alt="Organic Store"
+                decoding="async"
+        /></a>
+    </header>
+    <body>
+        <div id="product-container" class="product-container"></div>
+        <div class="detailed-product">
+            <img
+                src="https://storage.googleapis.com/merchant-center-europe/sample-data/goodstore/Ivory_Plate-1.1.jpeg"
+                alt="product"
+                height="400rem"
+                style="margin-top: 3rem"
+                class="image"
+            />
+            <div style="margin-top: 2rem">
+                <h1 class="D-name"></h1>
+                <h2 class="D-price">
+                    <span class="D-discount"></span>
+                </h2>
+                <div style="display: flex; gap: 1rem">
+                    <button class="cart">Add to Cart</button>
+                    <button class="cart back">Back</button>
+                </div>
+                <h3>Description</h3>
+                <div class="D-description"></div>
+            </div>
+        </div>
+        <script src="../javascript/catalog.js"></script>
+    </body>
 </html>
