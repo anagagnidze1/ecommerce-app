@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>User Info Cards</title>
+        <link rel="stylesheet" href="../styles/styles.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .card {
+                top: 250px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                width: 230px;
+                text-align: center;
+                transition: all 0.3s ease;
+                overflow: hidden;
+                height: auto;
+                position: relative;
+                background-color: #ffffff;
+            }
+
+            .card img {
+                border-radius: 50%;
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+            }
+
+            .card h2 {
+                margin: 10px 0;
+            }
+
+            .card p {
+                margin: 5px 0;
+            }
+
+            .more-info {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .card:hover .more-info {
+                max-height: 100px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <a href="../src/index.html"><img width="150" height="auto" margin-right="20px"
+                src="https://websitedemos.net/organic-shop-02/wp-content/uploads/sites/465/2019/06/organic-store-logo5.svg"
+                class="custom-logo" alt="Organic Store" decoding="async"></a>
+            <nav>
+                <ul class="login-registration" style="gap: 20px;">
+                    <li><a href="catalog.html" class="ln">Catalog</a></li>
+                    <li><a href="login.html" class="ln login">Login</a></li>
+                    <li><a href="register.html" class="ln">Register</a></li>
+                    <li><a href="#" class="chart"><i style="color: #6a9739;" class="fas fa-shopping-basket"></i></a>
+                    <li><a href="profile.html" class="profile"><i style="color: #111111;" class="fas fa-user profile-icon"></i></a></li>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="card" id="user1">
+            <img
+                src="https://avatars.githubusercontent.com/u/88559910?v=4"
+                alt="User Photo"
+                style="border: #9fde57, solid, 4px"
+            />
+            <h2 style="color: #8bc34a">Ana Gagnidze</h2>
+            <b>
+                <p style="color: #6e9e37">Role:(Leader) Functionality</p>
+            </b>
+            <a href="https://github.com/anagagnidze1"
+                ><i
+                    class="fa fa-github"
+                    style="font-size: 25px; color: #6e9e37"
+                ></i
+            ></a>
+            <p class="more-info" id="info1">
+                Ana, who also happens to be the leader of this team mostly
+                handled the API and Functionality
+            </p>
+            <p style="color: #8bc34a; opacity: 40%">Hover to Toggle</p>
+            <p style="color: #8bc34a; font-size: 20px; opacity: 40%">↧</p>
+        </div>
+
+        <div class="card" id="user2">
+            <img
+                src="https://avatars.githubusercontent.com/u/105096407?v=4"
+                alt="User Photo"
+                style="border: #9fde57, solid, 4px"
+            />
+            <h2 style="color: #8bc34a">Luka Umfriani</h2>
+            <b>
+                <p style="color: #6e9e37">Role: Functionality</p>
+            </b>
+            <a href="https://github.com/lacertaee"
+                ><i
+                    class="fa fa-github"
+                    style="font-size: 25px; color: #6e9e37"
+                ></i
+            ></a>
+            <p class="more-info" id="info2">
+                Luka, is another member of this team who mostly helped with the
+                Functionality of this app
+            </p>
+            <p style="color: #8bc34a; opacity: 40%">Hover to Toggle</p>
+            <p style="color: #8bc34a; font-size: 20px; opacity: 40%">↧</p>
+        </div>
+
+        <div class="card" id="user3">
+            <img
+                src="https://avatars.githubusercontent.com/u/132398911?v=4"
+                alt="User Photo"
+                style="border: #9fde57, solid, 4px"
+            />
+            <h2 style="color: #8bc34a">Kato Kavelashvili</h2>
+            <b>
+                <p style="color: #6e9e37">Role: Design</p>
+            </b>
+            <a href="https://github.com/katokavelashvili111a"
+                ><i
+                    class="fa fa-github"
+                    style="font-size: 25px; color: #6e9e37"
+                ></i
+            ></a>
+            <p class="more-info" id="info3">
+                Kato, is me :) the one who mostly handled the design of this app
+                and only a bit of Functionality
+            </p>
+            <p style="color: #8bc34a; opacity: 40%">Hover to Toggle</p>
+            <p style="color: #8bc34a; font-size: 20px; opacity: 40%">↧</p>
+        </div>
+
+
+        <script src="scripts.js"></script>
+    </body>
+</html>
