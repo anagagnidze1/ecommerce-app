@@ -65,14 +65,8 @@ function errorPassword(form, email, password, answ) {
     }
 }
 
-function storeUserDetails(userDetails) {
-    localStorage.setItem('user', JSON.stringify(userDetails));
-}
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
-
+    // Visibility of password
     vis.addEventListener('change', function () {
         var passwordField = document.querySelector('#password');
         if (vis.checked) {
@@ -112,42 +106,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Bearer bYfdpj5qLeUf-08qk8JEPrJ1CaW3fDFP");
+        myHeaders.append("Authorization", "Basic ZWNBMlpGaF9JUHp2ekYweDVzSDNEczV6Omp4bkxJWlFVRHRaVEp6UG96V1EyYVdQTkE1Ync0a3Uy");
 
-        const raw = JSON.stringify({
-        "email": email,
-        "password": password,
-        
-        });
-
+        const raw = "";
         const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow"
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
         };
 
-        fetch("https://api.europe-west1.gcp.commercetools.com/rsproject/login", requestOptions)
-        .then((response) => {
+        fetch("https://auth.europe-west1.gcp.commercetools.com/oauth/rsproject/customers/token?grant_type=password&username=" + email + "&password=" + password, requestOptions)
+        .then(async (response) => {
             if (!response.ok) {
-                throw new Error(`Failed to login: ${response.status}`);
+            const errorText = await response.text();
+            throw new Error(`Request failed with status ${response.status}: ${errorText}`);
             }
-            return response.text();
-        })
-        .then((result) => {
-            const parsedResult = JSON.parse(result);
-            console.log(parsedResult);
 
-
-            const customerId = parsedResult.customer.id;
-            console.log("Customer id: " + customerId);
-
-            localStorage.setItem('customerId', customerId);
-
+            
+            console.log("Response object:", response.json());
+            console.log("Access token retrieved successfully!");
             window.location.href = "index.html";
         })
-        .catch((error) => console.error('Error during login:', error));
-    
+        .catch((error) => {
+            console.error("Error retrieving access token:", error);
+        });
     });
 });
