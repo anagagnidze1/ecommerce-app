@@ -92,9 +92,9 @@ function applyDiscountsAndRender(products, discounts) {
             const originalPrice = priceObject.value.centAmount / 100
             const discount = discounts.find(
                 (discount) => discount.code === 'BOGO'
-            ) // Example: apply BOGO discount if available
+            )
             if (discount) {
-                const discountedPrice = originalPrice / 2 // Example: 50% off
+                const discountedPrice = originalPrice / 2
                 priceObject.discountedPrice = discountedPrice.toFixed(2)
             } else {
                 priceObject.discountedPrice = null
@@ -105,6 +105,7 @@ function applyDiscountsAndRender(products, discounts) {
 
     renderProductCards(products)
 }
+
 
 let id = 1
 let cartId = 'd'
@@ -138,6 +139,8 @@ function renderProductCards(products) {
 
         const productCard = document.createElement('div')
         productCard.className = 'product-card'
+        const productId = product.id;
+        productCard.setAttribute('data-product-id', productId);
         productCard.id = id
         id++
         productCard.innerHTML = `
@@ -153,6 +156,11 @@ function renderProductCards(products) {
             document.querySelector('.D-price').innerHTML =
                 `Price: ${price} <span class='D-discount'>Discount: ${discountedPrice}</span>`
             document.querySelector('.D-description').innerHTML = description
+
+
+            const detailedView = document.querySelector('.detailed-product');
+            detailedView.setAttribute('detailed-data-product-id', productId);
+
             document.querySelector('.product-container').style.display = 'none'
             document.querySelector('.detailed-product').style.display = 'flex'
             document.querySelector('.add').addEventListener('click', () => {
@@ -163,6 +171,21 @@ function renderProductCards(products) {
     })
 }
 
+
+function getCustomerId() {
+
+    const customerId = localStorage.getItem('customerId');
+    
+
+    if (customerId) {
+        console.log("Retrieved customerId:", customerId);
+        return customerId;
+    } else {
+        console.log("No customerId found in localStorage.");
+        return null;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchProductsAndDiscounts()
     document.querySelector('.back').addEventListener('click', () => {
@@ -171,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 })
 
+<<<<<<< HEAD
 async function createCart(id, product) {
     cartItems.push(product)
     console.log(cartItems)
@@ -257,3 +281,82 @@ async function createCart(id, product) {
 }
 
 module.exports = { cartItems }
+=======
+
+document.addEventListener('DOMContentLoaded', () => {
+    const addToCartButton = document.getElementById('add-to-cart');
+
+    addToCartButton.addEventListener('click', async () => {
+
+        const accessToken = await  fetchAccessToken()
+        const newToken = 'Bearer ' + accessToken
+        
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", newToken);
+
+
+        const requestOptions = {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow"
+        };
+
+
+
+        var userId = getCustomerId();
+        console.log("user-id:" + userId);
+        if (userId !== null) {
+            fetch(`https://api.europe-west1.gcp.commercetools.com/rsproject/carts/customer-id=${userId}`, requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }else if (response.status === 404) {
+                        const cartId = localStorage.getItem('cartId');
+                        console.log("cartId from LS: " + cartId)
+                        if(cartId == null){
+                            const raw = JSON.stringify({
+                                "currency": "EUR"
+                              });
+                              
+                              const requestOptions = {
+                                method: "POST",
+                                headers: myHeaders,
+                                body: raw,
+                                redirect: "follow"
+                              };
+                              
+                              fetch("https://api.europe-west1.gcp.commercetools.com/rsproject/carts", requestOptions)
+                                .then((response) => response.text())
+                                .then((result) =>{
+                                    console.log(result);
+                                    const parsedResult = JSON.parse(result);
+                                    console.log(parsedResult);
+    
+                                    const cartId = parsedResult.id;
+                                    console.log("Cart id: " + cartId);
+    
+                                    localStorage.setItem('cartId', cartId);
+    
+                                })
+                                .catch((error) => console.error(error));
+                        }
+
+
+                    }  else {
+                        throw new Error('Failed to fetch cart data');
+                    }
+                })
+                .then(data => {
+                    console.log('Cart data:', data);
+                })
+                .catch(error => {
+                    console.error('Error fetching cart data:', error);
+                });
+        } else {
+            console.log("User ID is null, cannot make API request.");
+        }
+    });
+});
+   
+>>>>>>> 91e9ba2500e171da94e5106465c886dfa2e2fe65
