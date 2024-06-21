@@ -107,6 +107,8 @@ function applyDiscountsAndRender(products, discounts) {
 }
 
 let id = 1
+let cartId = 'd'
+const cartItems = []
 
 function renderProductCards(products) {
     console.log('Rendering products:', products)
@@ -145,7 +147,6 @@ function renderProductCards(products) {
             <p class="price">Price: $${price}</p>
             ${discountedPrice ? `<p class="discounted-price">Discounted Price: $${discountedPrice}</p>` : ''}
         `
-
         productCard.addEventListener('click', () => {
             document.querySelector('.D-name').innerHTML = name
             document.querySelector('.image').src = `${imageUrl}`
@@ -154,6 +155,9 @@ function renderProductCards(products) {
             document.querySelector('.D-description').innerHTML = description
             document.querySelector('.product-container').style.display = 'none'
             document.querySelector('.detailed-product').style.display = 'flex'
+            document.querySelector('.add').addEventListener('click', () => {
+                createCart(cartId, product)
+            })
         })
         container.appendChild(productCard)
     })
@@ -166,3 +170,90 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.detailed-product').style.display = 'none'
     })
 })
+
+async function createCart(id, product) {
+    cartItems.push(product)
+    console.log(cartItems)
+    const firstRequestHeaders = new Headers()
+    firstRequestHeaders.append(
+        'Authorization',
+        'Bearer bYfdpj5qLeUf-08qk8JEPrJ1CaW3fDFP'
+    )
+
+    const firstRequestOptions = {
+        method: 'GET',
+        headers: firstRequestHeaders,
+        redirect: 'follow',
+    }
+    const firstResponse = await fetch(
+        `https://api.europe-west1.gcp.commercetools.com/rsproject/carts/${id}`,
+        firstRequestOptions
+    )
+    if (firstResponse.status === 404) {
+        const secondRequestHeaders = new Headers()
+        secondRequestHeaders.append('Content-Type', 'application/json')
+        secondRequestHeaders.append(
+            'Authorization',
+            'Bearer bYfdpj5qLeUf-08qk8JEPrJ1CaW3fDFP'
+        )
+
+        const raw = JSON.stringify({
+            currency: 'EUR',
+        })
+
+        const secondRequestOptions = {
+            method: 'POST',
+            headers: secondRequestHeaders,
+            body: raw,
+            redirect: 'follow',
+        }
+
+        const secondResponse = await fetch(
+            'https://api.europe-west1.gcp.commercetools.com/rsproject/carts',
+            secondRequestOptions
+        )
+
+        const secondResult = await secondResponse.json()
+        cartId = secondResult.id
+        console.log(secondResult.id)
+    } else {
+        console.log('else')
+        const firstResult = await firstResponse.json()
+        const myHeaders = new Headers()
+        myHeaders.append('Content-Type', 'application/json')
+        myHeaders.append(
+            'Authorization',
+            'Bearer bYfdpj5qLeUf-08qk8JEPrJ1CaW3fDFP'
+        )
+
+        const raw = JSON.stringify({
+            version: firstResult.version,
+            actions: [
+                {
+                    action: 'addLineItem',
+                    productId: product.id,
+                    variantId: product.lastVariantId,
+                    quantity: 1,
+                },
+            ],
+        })
+
+        const thirdRequestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow',
+        }
+
+        const thirdResponse = await fetch(
+            `https://api.europe-west1.gcp.commercetools.com/rsproject/carts/${id}`,
+            thirdRequestOptions
+        )
+
+        const thirdResult = await thirdResponse.json()
+        console.log(thirdResult.message)
+        console.log(firstResult.lineItems)
+    }
+}
+
+module.exports = { cartItems }
